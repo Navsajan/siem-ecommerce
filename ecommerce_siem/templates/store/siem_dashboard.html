@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIEM Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+        }
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            position: fixed;
+            background-color: #1e1e1e;
+            padding-top: 20px;
+            transition: transform 0.3s ease-in-out;
+        }
+        .sidebar a {
+            display: block;
+            padding: 15px;
+            color: #bbbbbb;
+            text-decoration: none;
+        }
+        .sidebar a:hover {
+            background-color: #333333;
+            color: white;
+        }
+        .content {
+            margin-left: 260px;
+            padding: 20px;
+            transition: margin-left 0.3s ease-in-out;
+        }
+        .sidebar-hidden {
+            transform: translateX(-100%);
+        }
+        .menu-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            z-index: 1000;
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+    
+    <div class="sidebar" id="sidebar">
+        <h4 class="text-center text-white">SIEM Dashboard</h4>
+        <a href="#">📊 Overview</a>
+        <a href="#">📁 Logs</a>
+        <a href="#">⚠️ Threats</a>
+        <a href="#">📌 Reports</a>
+        <a href="#">⚙️ Settings</a>
+    </div>
+
+    <div class="content" id="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card p-3 mb-3 text-white">
+                        <h5>Threats Breakdown</h5>
+                        <canvas id="threatChart"></canvas>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card p-3 mb-3 text-white">
+                        <h5>Log Activity Over Time</h5>
+                        <canvas id="logChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            let sidebar = document.getElementById("sidebar");
+            let content = document.getElementById("content");
+            if (sidebar.classList.contains("sidebar-hidden")) {
+                sidebar.classList.remove("sidebar-hidden");
+                content.style.marginLeft = "260px";
+            } else {
+                sidebar.classList.add("sidebar-hidden");
+                content.style.marginLeft = "0";
+            }
+        }
+
+        // Chart.js Data
+        const threatData = {
+            labels: ['DDoS', 'Malware', 'Phishing', 'Insider Threats', 'Other'],
+            datasets: [{
+                data: [30, 20, 15, 10, 25],
+                backgroundColor: ['#ff6384', '#36a2eb', '#ffce56', '#4bc0c0', '#9966ff']
+            }]
+        };
+        
+        const logData = {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            datasets: [{
+                label: 'Logs Processed',
+                data: [120, 150, 180, 220, 260, 300],
+                borderColor: '#36a2eb',
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderWidth: 2
+            }]
+        };
+        
+        new Chart(document.getElementById('threatChart'), { type: 'pie', data: threatData });
+        new Chart(document.getElementById('logChart'), { type: 'line', data: logData });
+    </script>
+</body>
+</html>
