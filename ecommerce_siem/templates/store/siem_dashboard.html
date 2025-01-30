@@ -101,29 +101,40 @@
                 content.style.marginLeft = "0";
             }
         }
-
-        // Chart.js Data
-        const threatData = {
-            labels: ['DDoS', 'Malware', 'Phishing', 'Insider Threats', 'Other'],
-            datasets: [{
-                data: [30, 20, 15, 10, 25],
-                backgroundColor: ['#ff6384', '#36a2eb', '#ffce56', '#4bc0c0', '#9966ff']
-            }]
-        };
-        
-        const logData = {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-            datasets: [{
-                label: 'Logs Processed',
-                data: [120, 150, 180, 220, 260, 300],
-                borderColor: '#36a2eb',
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                borderWidth: 2
-            }]
-        };
-        
-        new Chart(document.getElementById('threatChart'), { type: 'pie', data: threatData });
-        new Chart(document.getElementById('logChart'), { type: 'line', data: logData });
+    
+        // Fetch threat data from backend
+        fetch("https://siem-ecommerce.onrender.com/api/threats")
+            .then(response => response.json())
+            .then(data => {
+                const threatData = {
+                    labels: data.labels,
+                    datasets: [{
+                        data: data.values,
+                        backgroundColor: ['#ff6384', '#36a2eb', '#ffce56', '#4bc0c0', '#9966ff']
+                    }]
+                };
+                new Chart(document.getElementById('threatChart'), { type: 'pie', data: threatData });
+            })
+            .catch(error => console.error("Error fetching threat data:", error));
+    
+        // Fetch log activity data from backend
+        fetch("https://siem-ecommerce.onrender.com/api/logs")
+            .then(response => response.json())
+            .then(data => {
+                const logData = {
+                    labels: data.labels,
+                    datasets: [{
+                        label: 'Logs Processed',
+                        data: data.values,
+                        borderColor: '#36a2eb',
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderWidth: 2
+                    }]
+                };
+                new Chart(document.getElementById('logChart'), { type: 'line', data: logData });
+            })
+            .catch(error => console.error("Error fetching log data:", error));
     </script>
+    
 </body>
 </html>

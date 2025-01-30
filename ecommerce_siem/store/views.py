@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from .models import Product
 import os
+from django.http import JsonResponse
+
 def home(request):
     return render(request, 'home.html')
 
@@ -19,3 +21,16 @@ def siem_dashboard(request):
         logs = log_file.readlines()
 
     return render(request, 'siem_dashboard.html', {'logs': logs})
+def get_threats(request):
+    data = {
+        "labels": ["DDoS", "Malware", "Phishing", "Insider Threats", "Other"],
+        "values": [30, 20, 15, 10, 25]
+    }
+    return JsonResponse(data)
+
+def get_logs(request):
+    data = {
+        "labels": ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+        "values": [120, 150, 180, 220, 260, 300]
+    }
+    return JsonResponse(data)

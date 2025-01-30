@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-+fl6j+eguo27n-)pv)z33g=a8618)%07t3n*06=*^tm%n+9i3%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['siem-ecommerce.onrender.com']
+ALLOWED_HOSTS = ['siem-ecommerce.onrender.com','localhost']
 
 
 # Application definition
@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'store',
-    'ecommerce_siem'
+    'ecommerce_siem',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -52,7 +53,14 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+CORS_ALLOWED_ORIGINS = [
+    "https://navsajan.github.io/siem-ecommerce-demo/",
+]
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'ecommerce_siem.urls'
 
