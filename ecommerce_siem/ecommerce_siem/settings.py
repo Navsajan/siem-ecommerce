@@ -57,7 +57,7 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "https://navsajan.github.io/siem-ecommerce-demo/",
+    "https://navsajan.github.io",
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
