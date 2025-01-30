@@ -60,9 +60,6 @@ CORS_ALLOWED_ORIGINS = [
     "https://navsajan.github.io",
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    "https://navsajan.github.io", 
-]
 
 ROOT_URLCONF = 'ecommerce_siem.urls'
 
